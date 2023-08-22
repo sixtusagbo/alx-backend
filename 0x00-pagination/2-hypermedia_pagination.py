@@ -55,13 +55,14 @@ class Server:
         indexes = index_range(page, page_size)
         end = indexes[1]
         dataset = self.dataset()
-        next_page = None if end == len(dataset) else (end + 1)
-        prev_page = None if page == 1 else (page - 1)
+        next_page = None if end >= len(dataset) else page + 1
+        prev_page = None if page == 1 else page - 1
         total_pages = ceil(len(dataset) / page_size)
+        data = self.get_page(page, page_size)
         result = {
-            "page_size": page_size,
+            "page_size": len(data),
             "page": page,
-            "data": self.get_page(page, page_size),
+            "data": data,
             "next_page": next_page,
             "prev_page": prev_page,
             "total_pages": total_pages,
