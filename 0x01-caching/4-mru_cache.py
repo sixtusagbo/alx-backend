@@ -4,7 +4,7 @@ BaseCaching = __import__("base_caching").BaseCaching
 
 
 class MRUCache(BaseCaching):
-    """Least Recently Used caching"""
+    """Most Recently Used caching"""
 
     def __init__(self) -> None:
         super().__init__()
