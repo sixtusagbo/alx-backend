@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 """LRU caching"""
+from datetime import datetime
+
 BaseCaching = __import__("base_caching").BaseCaching
 
 
@@ -16,17 +18,15 @@ class LRUCache(BaseCaching):
             return
         self.cache_data[key] = item
         if len(self.cache_data.keys()) > BaseCaching.MAX_ITEMS:
-            least_used_key = min(self.usage, key=lambda k: self.usage[k])
-            del self.cache_data[least_used_key]
-            del self.usage[least_used_key]
-            print("DISCARD: {}".format(least_used_key))
-        self.usage[key] = (
-            self.usage[key] + 1 if self.usage.get(key) is not None else 1
-        )
+            least_recently_used = min(self.usage, key=lambda k: self.usage[k])
+            del self.cache_data[least_recently_used]
+            del self.usage[least_recently_used]
+            print("DISCARD: {}".format(least_recently_used))
+        self.usage[key] = datetime.now()
 
     def get(self, key):
         """Return an item from the cache"""
         if key is None or self.cache_data.get(key) is None:
             return None
-        self.usage[key] += 1
+        self.usage[key] = datetime.now()
         return self.cache_data[key]
