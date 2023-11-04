@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>{{ _('home_title') }}</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <h1>{{ _('home_header') }}</h1>
+    {% if user %}
+    <p>{{ _('logged_in_as', username=user.name) }}</p>
+
+    <p>
+      {{_('current_time_is', current_time=moment(now).format('MMMM Do YYYY,
+      h:mm:ss a'))}}
+    </p>
+    {% endif %} {% if not user %}
+    <p>{{ _('not_logged_in') }}</p>
+    {% endif %} {{ moment.include_moment() }} {{ moment.lang(g.locale) }}
+  </body>
+</html>
