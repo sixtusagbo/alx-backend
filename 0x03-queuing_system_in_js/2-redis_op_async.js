@@ -1,4 +1,4 @@
-import { createClient, print } from "redis";
+import redis, { createClient } from "redis";
 const { promisify } = require('util');
 
 let client;
@@ -13,7 +13,7 @@ let client;
 
 const getAsync = promisify(client.get).bind(client);
 
-const setNewSchool = (schoolName, value) => client.set(schoolName, value, print);
+const setNewSchool = (schoolName, value) => client.set(schoolName, value, redis.print);
 
 const displaySchoolValue = async (schoolName) => await getAsync(schoolName)
   .then((value) => console.log(value))
