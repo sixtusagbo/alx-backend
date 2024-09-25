@@ -1,6 +1,5 @@
 const { createQueue } = require('kue');
 
-const queue = createQueue();
 const jobs = [
   {
     phoneNumber: '4153518780',
@@ -49,6 +48,7 @@ const jobs = [
 ];
 
 for (const data of jobs) {
+  const queue = createQueue();
   const job = queue.create('push_notification_code_2', data).save((err) => {
     if (!err) console.log(`Notification job created: ${job.id}`);
   });
